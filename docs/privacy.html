@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LatentNest Privacy Policy</title>
+  <meta name="description" content="What the LatentNest browser extension stores, what it sends, and where.">
+  <link rel="icon" href="icon.png">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1d2026;
+      --muted: #5c6370;
+      --border: #e3e5e9;
+      --accent: #b86a00;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #14161b;
+        --text: #eef0f3;
+        --muted: #a3a9b3;
+        --border: #353a43;
+        --accent: #f29f2e;
+      }
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 system-ui, -apple-system, 'Segoe UI', Ubuntu, Roboto, sans-serif;
+    }
+    main { max-width: 42rem; margin: 0 auto; padding: 2.5rem 1rem 4rem; }
+    header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem; }
+    header img { width: 40px; height: 40px; }
+    h1 { font-size: 1.75rem; line-height: 1.2; margin: 0; }
+    h2 { font-size: 1.15rem; margin: 2rem 0 0.5rem; }
+    .date { color: var(--muted); margin: 0 0 1.5rem; }
+    .summary { border-left: 3px solid var(--accent); padding: 0.25rem 0 0.25rem 1rem; margin: 1.5rem 0; }
+    a { color: var(--accent); }
+    ul { padding-left: 1.25rem; }
+    li { margin: 0.35rem 0; }
+    footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="icon.png" alt="">
+    <h1>LatentNest Privacy Policy</h1>
+  </header>
+  <p class="date">Effective October 15, 2026</p>
+
+  <p class="summary">LatentNest does not collect, sell or share your data. Everything it saves stays in your browser. Data only leaves your device when LatentNest downloads an image you chose to add, and when it sends images to the captioning server that you set up yourself.</p>
+
+  <h2>What LatentNest stores</h2>
+  <p>Everything below is stored only in your browser profile, in the extension's own storage. It is not synced to any account or sent to Dainamo Labs.</p>
+  <ul>
+    <li>The images you add, with the address of each image and of the page it came from.</li>
+    <li>Your datasets, captions, crops, captioning hints and review state.</li>
+    <li>Your settings: the captioning server's address, the model name, your caption styles, and an API key if you enter one.</li>
+  </ul>
+
+  <h2>What leaves your device</h2>
+  <ul>
+    <li><strong>Image downloads.</strong> When you add an image, LatentNest downloads it from the website that hosts it. This is the same request your browser makes to display the image, including that site's cookies, so images behind a login can be saved.</li>
+    <li><strong>Captioning.</strong> When you generate captions, LatentNest sends the image, the caption instructions and any captioning hint to the server address you entered in Settings, along with your API key if you set one. By default this is a server on your own computer (<code>localhost</code>). If you point LatentNest at a server on another machine or at a third-party service, that service receives those images, and its own privacy policy applies.</li>
+  </ul>
+  <p>Nothing else is sent anywhere. LatentNest has no analytics, telemetry, ads, crash reporting or accounts, and it does not load code from the internet.</p>
+
+  <h2>Access to websites</h2>
+  <p>Access to all websites is optional, and LatentNest asks for it from its side panel. With it, a small script in each page notes where you last right-clicked and where the pointer is. These positions stay in that page and are used only to find the picture under the cursor when you choose <em>Add to Dataset</em> or press the keyboard shortcut. The script does not read page text, forms or your browsing history.</p>
+  <p>Some sites block reading the pixels of a video. When you add a frame from such a video, LatentNest takes a screenshot of the visible tab, keeps only the part covered by the video, and discards the rest.</p>
+
+  <h2>Backups and exports</h2>
+  <p>Backups and dataset exports are files saved to your computer when you ask for them. Backups never include your API key.</p>
+
+  <h2>Deleting your data</h2>
+  <p>Delete images or datasets from the side panel at any time. Uninstalling LatentNest, or clearing your browser's data for the extension, removes everything it stored.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>Any change will be posted on this page with a new effective date. Earlier versions are kept in the <a href="https://github.com/DainamoLabs/LatentNest/commits/master/docs/privacy.html">project's history on GitHub</a>.</p>
+
+  <h2>Contact</h2>
+  <p>Questions or concerns: open an issue at <a href="https://github.com/DainamoLabs/LatentNest/issues">github.com/DainamoLabs/LatentNest/issues</a>.</p>
+
+  <footer>LatentNest is open source, by Dainamo Labs. <a href="https://github.com/DainamoLabs/LatentNest">Source code</a></footer>
+</main>
+</body>
+</html>

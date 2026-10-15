@@ -9,6 +9,7 @@ export default defineConfig({
   manifest: ({ browser }) => ({
     name: 'LatentNest',
     description: 'Collect images from the web into captioned training datasets.',
+    homepage_url: 'https://github.com/DainamoLabs/LatentNest',
     permissions: [
       'contextMenus',
       'storage',
@@ -40,14 +41,22 @@ export default defineConfig({
         description: 'Add the picture or video frame under the pointer to the last used dataset',
       },
     },
-    ...(browser === 'firefox' && {
-      browser_specific_settings: {
-        gecko: {
-          id: 'latentnest@dainamolabs',
-          strict_min_version: '128.0',
-          data_collection_permissions: { required: ['none'] },
-        },
-      },
-    }),
+    ...(browser === 'firefox'
+      ? {
+          // Chrome's `author` takes an email object; the store listing names the publisher anyway.
+          author: 'Dainamo Labs',
+          browser_specific_settings: {
+            gecko: {
+              // Permanent once published on AMO.
+              id: 'latentnest@dainamolabs',
+              strict_min_version: '128.0',
+              data_collection_permissions: { required: ['none'] },
+            },
+          },
+        }
+      : {
+          // sidePanel.open() and setPanelBehavior() arrived in Chrome 116.
+          minimum_chrome_version: '116',
+        }),
   }),
 });
