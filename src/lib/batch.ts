@@ -95,6 +95,25 @@ export async function queueBatch(datasetId: string, ids?: string[]): Promise<str
   });
 }
 
+/**
+ * An update, reload or browser restart stops every extension page, the runner
+ * included. Called by the background when it starts after one, so the run
+ * shows as stopped right away rather than "running" until its heartbeat goes
+ * stale, which also blocked starting it again.
+ */
+export async function endInterruptedBatch() {
+  await db.transaction('rw', db.jobs, async () => {
+    const job = await db.jobs.get('batch');
+    if (!job?.running) return;
+    await db.jobs.put({
+      ...job,
+      running: false,
+      currentId: undefined,
+      error: 'Captioning stopped because LatentNest restarted. Start it again to caption the rest.',
+    });
+  });
+}
+
 // ------------------------------------------------------------ runner
 
 let controller: AbortController | null = null;

@@ -8,7 +8,7 @@ import { captureVideoFrame, grabImageInPage, promptDatasetName, showToast } from
 import type { FindRequest, FinderGlobal, Found } from '@/lib/findImage';
 import { ADD_COMMAND, parseMenuId, rebuildMenus, type MenuKind } from '@/lib/menus';
 import { hasSiteAccess, openSidePanel, toggleSidebar } from '@/lib/platform';
-import { abortBatch, formatDuration, isLive, queueBatch, runQueuedBatch, type BatchMessage } from '@/lib/batch';
+import { abortBatch, endInterruptedBatch, formatDuration, isLive, queueBatch, runQueuedBatch, type BatchMessage } from '@/lib/batch';
 import { getBackend, getStyles } from '@/lib/settings';
 import toastMark from '@/assets/toast-mark.png?inline';
 
@@ -47,10 +47,12 @@ export default defineBackground(() => {
     void rebuildMenus();
     // Pages already open don't get a newly registered script, nor one from before an update.
     void syncFinder(true);
+    void endInterruptedBatch();
   });
   browser.runtime.onStartup.addListener(() => {
     void rebuildMenus();
     void syncFinder(false);
+    void endInterruptedBatch();
   });
   browser.permissions.onAdded.addListener(() => void syncFinder(true));
   browser.permissions.onRemoved.addListener(() => void syncFinder(false));
