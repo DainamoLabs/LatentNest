@@ -107,8 +107,8 @@ export function buildPrompt(stylePrompt: string, hint?: string): string {
 const FIXED_FIELDS = ['messages', 'stream'];
 
 /** The "Extra request fields" setting as an object. */
-export function parseExtraBody(text: string): Record<string, unknown> {
-  if (!text.trim()) return {};
+export function parseExtraBody(text: string | undefined): Record<string, unknown> {
+  if (!text?.trim()) return {};
   let value: unknown;
   try {
     value = JSON.parse(text);

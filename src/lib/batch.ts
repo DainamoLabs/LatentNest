@@ -9,7 +9,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db, hasCaption, type BatchJob, type ImageRecord } from './db';
 import { fillCaptionIfBlank } from './datasets';
 import { applyTrigger, CaptionError, generateCaption } from './captioner';
-import { resolveStyle, type BackendSettings, type CaptionStyle } from './settings';
+import { readBackend, resolveStyle, type BackendSettings, type CaptionStyle } from './settings';
 
 export type BatchMessage =
   | { type: 'batch:start'; datasetId: string; ids?: string[] }
@@ -120,6 +120,9 @@ export async function runQueuedBatch(
   if (controller) return;
   const job = await db.jobs.get('batch');
   if (!job || !isLive(job)) return;
+  // The settings come from another context, which may run an older version
+  // until the extension is reloaded: fill in anything it didn't know about.
+  const backend = readBackend(settings.backend);
   controller = new AbortController();
   const { signal } = controller;
 
@@ -168,7 +171,7 @@ export async function runQueuedBatch(
         continue;
       }
       try {
-        const caption = await generateCaption(original.blob, style, settings.backend, { signal, crop: image.crop, hint: image.hint });
+        const caption = await generateCaption(original.blob, style, backend, { signal, crop: image.crop, hint: image.hint });
         // Read the trigger word fresh in case it was edited mid-run.
         const current = await db.datasets.get(dataset.id);
         await fillCaptionIfBlank(id, applyTrigger(caption, current?.triggerWord));
