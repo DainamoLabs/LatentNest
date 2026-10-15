@@ -6,15 +6,24 @@ Chrome (side panel) and Firefox (sidebar) from one codebase. By Dainamo Labs.
 
 ## Development
 
+Needs Node 22 or newer.
+
 ```sh
 npm install
 npm run dev            # Chrome, with hot reload
 npm run dev:firefox    # Firefox
 npm run build          # → .output/chrome-mv3
 npm run build:firefox  # → .output/firefox-mv3
-npm run zip            # store-ready ZIPs (zip:firefox for AMO)
+npm run zip            # store-ready ZIPs (zip:firefox for AMO, plus the sources ZIP it asks for)
 npm run compile        # type-check
+npm run lint           # oxlint
+npm test               # unit tests (Vitest)
+npm run test:e2e       # builds with --mode e2e, then runs the Playwright smoke tests in Chromium
 ```
+
+Before the first `test:e2e`, run `npm run test:e2e:install` once. It downloads Playwright's Chromium into `.playwright/` inside the project (git-ignored), not into your home folder.
+
+Releasing: the store texts, permission justifications and a pre-submission checklist are in [store/LISTING.md](store/LISTING.md).
 
 Load a build manually:
 
@@ -124,14 +133,27 @@ src/
   panel/                side panel views (Home, DatasetView, ImageGrid, Editor, Selection, ExportDialog, …)
   options/              settings UI
   components/, hooks/, styles/
+tests/
+  unit/                 Vitest, with an in-memory browser API and IndexedDB
+  e2e/                  Playwright: loads the e2e build in Chromium, with a fake caption server
 assets-src/             source logo; scripts/make-mark.py derives the simplified 16/32px mark
                         from it, then `npm run icons` regenerates public/icon and friends
+docs/                   GitHub Pages site: the privacy policy
+store/                  store listing texts and the promo tile (scripts/make-store-assets.mjs)
 ```
 
-Everything is stored locally in the browser profile (IndexedDB, with `unlimitedStorage`). Nothing leaves the machine except requests to the captioning server you configure.
+Everything is stored locally in the browser profile (IndexedDB, with `unlimitedStorage`). Nothing leaves the machine except image downloads from the sites you save from and requests to the captioning server you configure. See the [privacy policy](https://dainamolabs.github.io/LatentNest/privacy.html).
+
+The database schema is versioned in `src/lib/db.ts`. Never edit a version that has shipped: add a new one (with an upgrade function if existing rows must change). `tests/unit/db.test.ts` fails if a shipped version changes.
 
 ## Known limitations
 
 - Only one batch run at a time, across all datasets.
 - Sites that check the `Referer` header on image requests (some art sites) can refuse the download.
 - `wxt build --mode e2e` exposes a test hook in the background script. Normal builds strip it.
+
+## License
+
+The code is released under the [MIT License](LICENSE).
+
+The LatentNest name, the bird logo and the Dainamo Labs name and logo are not covered by that license. A fork you publish must use a different name and icon.
