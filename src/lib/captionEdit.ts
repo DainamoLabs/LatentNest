@@ -35,17 +35,20 @@ export function tidy(caption: string): string {
 
 /**
  * Replaces every match. Without `regex`, `$` in the replacement is literal;
- * with it, `$1` etc. refer to groups. Unchanged captions come back as-is.
+ * with it, `$1` etc. refer to groups. Unchanged captions come back as-is, and
+ * so do blank ones (a pattern like `^` matches them), so auto-captioning
+ * still fills them.
  */
 export function replaceIn(caption: string, matcher: RegExp, replacement: string, regex: boolean): string {
   matcher.lastIndex = 0;
-  if (!matcher.test(caption)) return caption;
+  if (!caption.trim() || !matcher.test(caption)) return caption;
   matcher.lastIndex = 0;
   const next = caption.replace(matcher, regex ? replacement : replacement.replaceAll('$', '$$$$'));
   return next === caption ? caption : tidy(next);
 }
 
 export function countMatches(caption: string, matcher: RegExp): number {
+  if (!caption.trim()) return 0; // replaceIn leaves blank captions alone
   matcher.lastIndex = 0;
   let n = 0;
   for (const m of caption.matchAll(matcher)) {
