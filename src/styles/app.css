@@ -417,6 +417,30 @@ kbd {
   font-size: 13px;
 }
 
+.crash {
+  margin-top: 24px;
+}
+.crash-message {
+  max-width: 100%;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--field);
+  color: var(--danger);
+  font-family: var(--mono);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.crash-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 4px 0;
+}
+.crash a {
+  color: var(--accent);
+}
+
 /* --------------------------------------------------------------- banner */
 
 .banner {
