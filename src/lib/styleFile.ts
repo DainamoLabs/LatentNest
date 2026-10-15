@@ -101,6 +101,7 @@ export function styleToMarkdown(style: { name: string; prompt: string }): string
 
 /** A file name for a style, unique among `taken` (which it updates). */
 export function styleFileName(name: string, taken: Set<string>): string {
+  // oxlint-disable-next-line no-control-regex -- control characters aren't allowed in file names
   const base = name.replace(/[\\/:*?"<>|\x00-\x1f]/g, ' ').replace(/\s+/g, ' ').trim().replace(/^\.+|[. ]+$/g, '') || 'caption style';
   let file = `${base}.md`;
   for (let n = 2; taken.has(file.toLowerCase()); n++) file = `${base} (${n}).md`;

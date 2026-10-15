@@ -50,6 +50,7 @@ export const exportOptionsFor = (dataset: Dataset): ExportOptions => cleanExport
  */
 export function kohyaFolderName(dataset: Pick<Dataset, 'name' | 'triggerWord'>, options: Pick<ExportOptions, 'repeats' | 'className'>) {
   const words = [dataset.triggerWord, options.className]
+    // oxlint-disable-next-line no-control-regex -- control characters aren't allowed in file names
     .map((w) => (w ?? '').replace(/[\\/:*?"<>|\x00-\x1f]/g, ' ').replace(/\s+/g, ' ').trim())
     .filter(Boolean)
     .join(' ')

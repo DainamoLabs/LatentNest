@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "react", "jsx-a11y"],
+  "categories": { "correctness": "error" },
+  "rules": {
+    // React Compiler purity rules. LatentNest doesn't use the compiler, and
+    // its refs-during-render and reset-on-id-change effects are deliberate.
+    "react/refs": "off",
+    "react/set-state-in-effect": "off",
+    "react-hooks/exhaustive-deps": "error",
+    "react-hooks/rules-of-hooks": "error",
+    // Dialogs focus their first field on open, on purpose.
+    "jsx-a11y/no-autofocus": "off",
+    // role="group" / "status" / "progressbar" on a div is valid ARIA.
+    "jsx-a11y/prefer-tag-over-role": "off"
+  },
+  "overrides": [
+    // Playwright fixtures call a function named `use`, which isn't React's.
+    { "files": ["tests/**"], "rules": { "react-hooks/rules-of-hooks": "off" } }
+  ],
+  "ignorePatterns": [".output/**", ".wxt/**", ".playwright/**", "test-results/**"]
+}

@@ -101,6 +101,9 @@ class LatentNestDB extends Dexie {
 
   constructor() {
     super('latentnest');
+    // Never edit a version that has shipped: installed copies already have it.
+    // Add the next version instead, with .upgrade() if existing rows must
+    // change. tests/unit/db.test.ts pins the shipped ones.
     this.version(1).stores({
       datasets: 'id, lastUsedAt',
       images: 'id, datasetId, [datasetId+hash], [datasetId+addedAt]',

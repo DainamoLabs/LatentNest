@@ -1,9 +1,22 @@
 {
   "name": "latentnest",
   "description": "Collect images from the web into captioned training datasets.",
-  "private": true,
   "version": "0.1.0",
+  "license": "MIT",
+  "author": "Dainamo Labs",
+  "homepage": "https://github.com/DainamoLabs/LatentNest",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DainamoLabs/LatentNest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DainamoLabs/LatentNest/issues"
+  },
+  "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "wxt",
     "dev:firefox": "wxt -b firefox",
@@ -13,7 +26,12 @@
     "zip:firefox": "wxt zip -b firefox",
     "compile": "tsc --noEmit",
     "icons": "node scripts/gen-icons.mjs",
-    "postinstall": "wxt prepare"
+    "postinstall": "wxt prepare",
+    "lint": "oxlint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "wxt build --mode e2e && playwright test",
+    "test:e2e:install": "PLAYWRIGHT_BROWSERS_PATH=.playwright playwright install --no-shell chromium"
   },
   "dependencies": {
     "dexie": "^4.4.6",
@@ -24,11 +42,16 @@
     "react-dom": "^19.3.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@wxt-dev/module-react": "^1.2.2",
+    "fake-indexeddb": "^6.2.5",
+    "oxlint": "^1.87.0",
     "sharp": "^0.35.5",
     "typescript": "^7.0.2",
+    "vitest": "^5.0.3",
     "wxt": "^0.21.4"
   }
 }

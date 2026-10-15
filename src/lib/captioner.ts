@@ -17,7 +17,7 @@ export class CaptionError extends Error {
 
 export function apiUrl(baseUrl: string, path: string): string {
   const base = baseUrl.trim().replace(/\/+$/, '');
-  return /\/v1$/.test(base) ? `${base}${path}` : `${base}/v1${path}`;
+  return base.endsWith('/v1') ? `${base}${path}` : `${base}/v1${path}`;
 }
 
 /** Host-permission pattern covering the backend, e.g. "http://192.168.1.5/*". */

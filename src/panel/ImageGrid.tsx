@@ -245,6 +245,8 @@ export function ImageGrid({
   }
 
   return (
+    // Arrow-key navigation for the tiles (buttons) inside, handled in one place.
+    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       className={`grid grid-${size}${selection ? ' selecting' : ''}`}
       ref={gridRef}

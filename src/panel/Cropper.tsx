@@ -154,9 +154,12 @@ export function Cropper({
           onPointerCancel={end}
         >
           {url && <img src={url} alt="" draggable={false} style={{ inset: 0, width: '100%', height: '100%' }} />}
+          {/* A focusable, labelled widget: arrow keys move it. */}
+          {/* oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
           <div
             ref={box}
             className="crop-box"
+            // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
             tabIndex={0}
             role="group"
             aria-label={`Crop area ${rect.width}×${rect.height}. Arrow keys move it, Enter applies, Esc cancels.`}

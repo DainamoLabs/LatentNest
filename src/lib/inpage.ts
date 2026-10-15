@@ -147,7 +147,7 @@ export async function grabImageInPage(url: string): Promise<string | null> {
     const res = await fetch(url);
     if (res.ok) {
       const blob = await res.blob();
-      if (blob.size > 0 && !/^text\//.test(blob.type)) return await toDataUrl(blob);
+      if (blob.size > 0 && !blob.type.startsWith('text/')) return await toDataUrl(blob);
     }
   } catch {
     /* fall through to canvas */

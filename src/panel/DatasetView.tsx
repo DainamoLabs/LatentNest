@@ -210,21 +210,22 @@ export function DatasetView({
     return () => window.removeEventListener('keydown', onKey);
   }, [selection, visible]);
 
+  const { setBusy } = actions;
   const runImport = useCallback(
     async (files: InputFile[]) => {
       if (!files.length) return;
       const title = 'Importing images…';
-      actions.setBusy({ title, done: 0, total: 0 });
+      setBusy({ title, done: 0, total: 0 });
       try {
-        const summary = await importFiles(id, files, (done, total) => actions.setBusy({ title, done, total }));
+        const summary = await importFiles(id, files, (done, total) => setBusy({ title, done, total }));
         toast(summarize(summary), { kind: summary.added || summary.captions ? 'info' : 'error' });
       } catch (err) {
         toastError(err);
       } finally {
-        actions.setBusy(null);
+        setBusy(null);
       }
     },
-    [id, actions.setBusy],
+    [id, setBusy],
   );
 
   async function addUrl(url: string) {
