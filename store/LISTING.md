@@ -8,15 +8,19 @@ Everything the Chrome Web Store and Firefox Add-ons (AMO) dashboards ask for, re
 | --- | --- | --- |
 | Store icon | `public/icon/128.png` | Taken from the package. 96×96 artwork inside 16px of padding. |
 | Small promo tile (440×280) | `store/promo-tile-440x280.png` | Regenerate with `node scripts/make-store-assets.mjs`. |
-| Screenshots (1280×800, 1–5) | not yet made | Ideas below. PNG or JPEG, no transparency. |
+| Screenshots (1280×800, 1–5) | `store/screenshots/` | 24-bit PNG, no transparency. |
 
-Screenshot ideas (open the panel in a tab with *Open in tab* and set the window to 1280×800):
+Upload in this order (the first one sells the listing):
 
-1. The right-click menu on a web page: *Add to Dataset* → dataset list.
-2. A dataset grid with captioned tiles, filter and sort visible.
-3. The editor: image, caption, *Generate* and the review badge.
-4. Settings: server type, model, *Test connection* succeeded.
-5. The Export dialog with the kohya_ss layout selected.
+1. `1-overview.png`: the Commons page with the side panel open on the captioned dataset.
+2. `2-context-menu.png`: right-click → *Add to Dataset* → `watercolor_style`.
+3. `3-editor.png`: an auto caption in the editor, marked *Needs review*.
+4. `4-batch-captioning.png`: a batch run in progress, with time left.
+5. `5-export.png`: the Export dialog with the kohya_ss layout.
+
+Alternates: `alt-settings.png` (a successful connection test against llama.cpp), `alt-bulk-edit.png` (regex find & replace with its preview), `alt-grid.png` (the captioned dataset).
+
+The screenshot dataset is 16 public-domain watercolors by Winslow Homer (1836–1910), from Wikimedia Commons. The captions are real output from a local llama.cpp vision model, using the *Style LoRA* caption style. Shots 1 and 2 are captured by hand in Chromium (raw captures in the git-ignored `store/screenshots/raw/`); shots 3–5 and the alternates come from Playwright, with the website-access banner hidden, as it is once access is granted.
 
 ## Basics
 
